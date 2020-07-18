@@ -1,0 +1,19 @@
+Assignment –3
+
+Overview of SQL.
+
+1) Does ANSI recognize the data type DATE?
+
+Ans: Yes, ANSI recognize the data type DATE
+	The DATE type is used for values with a date part but no time part. 
+	MySQL retrieves and displays DATE values in 'YYYY-MM-DD' format. 
+	The supported range is '1000-01-01' to '9999-12-31'.
+
+
+2) Which subdivision of SQL is used to insert values in tables?
+
+Ans: Inserting data to a table through a select statement.
+	 INSERT INTO table_name
+	 [(column1, column2, ... columnN)]
+	 SELECT column1, column2, ...columnN
+	 FROM table_name [WHERE condition];
