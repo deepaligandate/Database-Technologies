@@ -1,0 +1,66 @@
+#Assignment – 20
+#Changing Values through Views.
+use assignment;
+#1) Which of these views are updateable (will allow DML operations)?
+#1 
+Create View Dailyorders
+as Select Distinct cnum, snum, onum, odate from Orders;
+#Ans: Yes
+
+#2 
+Create View Custotals
+as Select cname, Sum (amt) Sum_Amt from Orders, Customers
+where Orders.cnum=Customers.cnum
+Group by cname;
+#Ans: Views are note updatable which consists of join.
+
+#3 
+Create view Thirdorders
+as Select * from Dailyorders where
+odate=’1990-10-03’;
+#Ans: Not updatable due to distinct keyword in dailyorders;
+
+#4 
+Create view Nullcities
+as Select snum, sname, city
+from Salespeople
+where city is NULL
+OR sname BETWEEN ‘A’ and ‘MZ’;
+#Ans: Yes
+
+#2) Create a view of the Salespeople table called Commissions. This view will include only the snum and comm fields. 
+#Through this view, someone could enter or change commissions, but only to values between .10 and .20.
+
+select * from salespeople;
+create view snum_c
+as
+select snum,comm from salespeople where comm between .10 and .20 with check option;
+select * from snum_c;
+insert into snum_c values(2000,.5);     -- value not inserted into table
+insert into snum_c values(2000,.15);     -- inserts value 
+
+#3) Some SQL implementations have a built-in constant representing the current date,sometimes called “CURDATE” or “SYSDATE”. 
+#The word SYSDATE can therefore be used in a SQL statement, and be replaced by the current date when the value is accessed by commands 
+#such as Select or Insert. We will use a view of the Orders table called Entryorders to insert rows into the Orders table. Create the
+#Orders table, so that SYSDATE is automatically inserted for odate if no value is given. 
+#Then create the Entryorders view so that no values can be given
+
+create table ORDERSnew1
+(
+	Onum INT(4),
+	Amt FLOAT(7,2),
+	Odate datetime default current_timestamp,
+	Cnum INT(4),
+	Snum INT(4),
+    constraint pk_onum primary key(onum)
+);
+
+select * from ordersnew1;
+
+create view Entryorders 
+as 
+select * from ORDERSnew1;
+
+insert into ordersnew1 values(101,3400,null,202,301);
+ insert into ordersnew1 (onum,amt,cnum,snum)values(102,3400,202,301);
+insert into ordersnew1 (onum,amt,cnum,snum)values(107,3400,202,301);
